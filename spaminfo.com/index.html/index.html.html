@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spam Info Sayt</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Orqa fon - Spam Info Bot logotipi */
+        .bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://t.me/i/userpic/320/SpamdanChiqarish_001.jpg');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 600px;
+            opacity: 0.06;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background: rgba(15, 32, 39, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            z-index: 100;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-logo {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #00c853;
+            box-shadow: 0 0 15px rgba(0, 200, 83, 0.3);
+        }
+
+        .nav-title {
+            font-size: 20px;
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-title span {
+            color: #00c853;
+        }
+
+        .nav-right {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .nav-link {
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.08);
+            color: #fff;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-link:hover {
+            background: rgba(0, 200, 83, 0.15);
+            border-color: rgba(0, 200, 83, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 200, 83, 0.2);
+        }
+
+        .nav-link .avatar {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        /* Main content */
+        .main-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 100px 20px 60px;
+            text-align: center;
+        }
+
+        .hero-logo {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #00c853;
+            box-shadow: 0 0 40px rgba(0, 200, 83, 0.3), 0 0 80px rgba(0, 200, 83, 0.1);
+            margin-bottom: 25px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .hero-title {
+            font-size: 42px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+        }
+
+        .hero-title span {
+            color: #00c853;
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 40px;
+            font-weight: 400;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 18px 50px;
+            background: linear-gradient(135deg, #2196F3, #0D47A1);
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 700;
+            border-radius: 50px;
+            box-shadow: 0 8px 30px rgba(33, 150, 243, 0.4);
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 40px rgba(33, 150, 243, 0.5);
+        }
+
+        .cta-button svg {
+            width: 22px;
+            height: 22px;
+            fill: currentColor;
+        }
+
+        /* Features section */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 900px;
+            width: 100%;
+            margin-top: 60px;
+            padding: 0 20px;
+        }
+
+        .feature-card {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 20px;
+            padding: 30px 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(0, 200, 83, 0.3);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+
+        .feature-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .feature-desc {
+            font-size: 13px;
+            color: rgba(255,255,255,0.5);
+            line-height: 1.5;
+        }
+
+        .feature-link {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 8px 20px;
+            background: rgba(0, 200, 83, 0.15);
+            color: #00c853;
+            text-decoration: none;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            border: 1px solid rgba(0, 200, 83, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .feature-link:hover {
+            background: rgba(0, 200, 83, 0.25);
+            transform: scale(1.05);
+        }
+
+        /* Footer */
+        .footer {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 30px;
+            color: rgba(255,255,255,0.3);
+            font-size: 13px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 12px 15px;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            .nav-right {
+                gap: 6px;
+                flex-wrap: wrap;
+                justify-content: flex-end;
+            }
+            .nav-link {
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+            .nav-link span {
+                display: none;
+            }
+            .hero-title {
+                font-size: 28px;
+            }
+            .hero-logo {
+                width: 120px;
+                height: 120px;
+            }
+            .cta-button {
+                padding: 15px 35px;
+                font-size: 16px;
+            }
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+    <div class="bg-overlay"></div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <img src="https://t.me/i/userpic/320/SpamdanChiqarish_001.jpg" alt="Spam Info Bot" class="nav-logo">
+            <div class="nav-title">Spam <span>Info</span></div>
+        </div>
+        <div class="nav-right">
+            <a href="https://t.me/Asror9005" class="nav-link" target="_blank">
+                <img src="https://t.me/i/userpic/320/Asror9005.jpg" alt="Admin2" class="avatar">
+                <span>Admin2</span>
+            </a>
+            <a href="https://t.me/SpamdanChiqarish_001" class="nav-link" target="_blank">
+                <img src="https://t.me/i/userpic/320/SpamdanChiqarish_001.jpg" alt="Isbotlar" class="avatar">
+                <span>Isbotlar</span>
+            </a>
+            <a href="https://t.me/Damasbotbot" class="nav-link" target="_blank">
+                <img src="https://t.me/i/userpic/320/Damasbotbot.jpg" alt="Musiqa botlar" class="avatar">
+                <span>Musiqa botlar</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <img src="https://t.me/i/userpic/320/SpamdanChiqarish_001.jpg" alt="Spam Info Bot" class="hero-logo">
+        <h1 class="hero-title">Spam <span>Info</span> Sayt</h1>
+        <p class="hero-subtitle">Telegram botlar va spamdan himoya xizmatlari</p>
+
+        <a href="https://t.me/thee_boss_777" class="cta-button" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+            MENGA YOZING
+        </a>
+
+        <!-- Features -->
+        <div class="features">
+            <div class="feature-card">
+                <img src="https://t.me/i/userpic/320/Asror9005.jpg" alt="Admin2" class="feature-icon">
+                <div class="feature-title">Admin2</div>
+                <div class="feature-desc">Asosiy administrator bilan bog'lanish</div>
+                <a href="https://t.me/Asror9005" class="feature-link" target="_blank">Bog'lanish</a>
+            </div>
+            <div class="feature-card">
+                <img src="https://t.me/i/userpic/320/SpamdanChiqarish_001.jpg" alt="Isbotlar" class="feature-icon">
+                <div class="feature-title">Isbotlar</div>
+                <div class="feature-desc">Spamdan chiqarish va himoya botlari</div>
+                <a href="https://t.me/SpamdanChiqarish_001" class="feature-link" target="_blank">Ko'rish</a>
+            </div>
+            <div class="feature-card">
+                <img src="https://t.me/i/userpic/320/Damasbotbot.jpg" alt="Musiqa botlar" class="feature-icon">
+                <div class="feature-title">Musiqa botlar</div>
+                <div class="feature-desc">Eng yaxshi musiqa va audio botlari</div>
+                <a href="https://t.me/Damasbotbot" class="feature-link" target="_blank">Boshlash</a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        © 2026 Spam Info Sayt. Barcha huquqlar himoyalangan.
+    </footer>
+</body>
+</html>
